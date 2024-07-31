@@ -1,0 +1,55 @@
+ManifestFileVersion: 0
+CRC: 721826960
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3551edebdb5c18d368bd508beb9e8104
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7cadbda9401df10a535d113e31178f43
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 3551edebdb5c18d368bd508beb9e8104
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 89
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Games/Adventure/Animation/Player.controller
+- Assets/Games/Adventure/Animation/Idle.anim
+- Assets/Games/Adventure/Material/Ground.mat
+- Assets/Games/Adventure/Animation/Jump.anim
+- Assets/Games/Adventure/Material/Rio.mat
+- Assets/Games/Adventure/Material/Finish.mat
+- Assets/Games/Adventure/Animation/Run.anim
+- Assets/Games/Adventure/Prefab/Field.prefab
+- Assets/Games/Adventure/Lightning/ReflectionProbe-0.exr
+- Assets/Games/Adventure/Sprite/tile.png
+- Assets/Games/Adventure/Animation/Land.anim
+- Assets/Games/Adventure/Model/Idle.fbx
+Dependencies: []
