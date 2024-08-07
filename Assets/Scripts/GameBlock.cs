@@ -31,6 +31,71 @@ public class GameBlock : MonoBehaviour
         {
             if (SceneAssetBundle == null) yield return GetFromWeb(Type.Scene, bundleNames.sceneBundle);
             if (DataAssetBundle == null) yield return GetFromWeb(Type.Data, bundleNames.objectBundle);
+=======
+        public string MainUrl { get { return "https://storage.yandexcloud.net/cbtaunitytest/"; } }
+        [Header("Buttons")]
+        [SerializeField] private ButtonCollection buttonCollection;
+        private Button startButton;
+        private Button downloadButton;
+        private Button deleteButton;
+        private Button cancelButton;
+        [SerializeField] private Image loadingImage;
+
+        [Header("Bundle Names")]
+        public SceneWithObjectsBundleNames bundleNames;
+        #region ASSET_BUNDLES
+        public AssetBundle SceneAssetBundle { get; set; }
+        public AssetBundle DataAssetBundle { get; set; }
+        #endregion
+
+        [SerializeField] private AssetReference reference;
+
+        private Coroutine downloadCoroutine;
+
+        public GameBlock(ButtonCollection buttonCollection, Image loadingImage, SceneWithObjectsBundleNames bundleNames, AssetReference reference)
+        {
+            this.buttonCollection = buttonCollection;
+            this.loadingImage = loadingImage;
+            this.bundleNames = bundleNames;
+            this.reference = reference;
+        }
+
+        public void Init()
+        {
+            startButton = buttonCollection.startButton;
+            downloadButton = buttonCollection.downloadButton;
+            downloadButton.onClick.AddListener(() => DownloadSceneWithObjectsFromAssetBundle());
+            deleteButton = buttonCollection.deleteButton;
+            cancelButton = buttonCollection.cancelButton;
+            cancelButton.onClick.AddListener(() => CancelDownload());
+        }
+
+        #region BUTTON_ACTIONS
+        public void DownloadSceneWithObjectsFromAssetBundle()
+        {
+            Launcher.instance.errorText.SetActive(false);
+            DownloadAndCancelButtonSwap(true);
+            IEnumerator LoadSceneWithObjects()
+            {
+                if (SceneAssetBundle == null) yield return GetFromWeb(Type.Scene, bundleNames.sceneBundle);
+                if (DataAssetBundle == null) yield return GetFromWeb(Type.Data, bundleNames.objectBundle);
+                loadingImage.fillAmount = 0;
+                DownloadAndCancelButtonSwap(false);
+                if (SceneAssetBundle != null && DataAssetBundle != null) ButtonSetAndEnable();
+                else Launcher.instance.errorText.SetActive(true);
+            }
+            downloadCoroutine = Launcher.instance.StartCoroutine(LoadSceneWithObjects());
+        }
+        public void CancelDownload()
+        {
+            if (downloadCoroutine != null)
+            {
+                Launcher.instance.StopCoroutine(downloadCoroutine);
+                downloadCoroutine = null;
+            }
+            if (DataAssetBundle != null) DataAssetBundle.Unload(true);
+            if (SceneAssetBundle != null) SceneAssetBundle.Unload(true);
+>>>>>>> Stashed changes
             loadingImage.fillAmount = 0;
             DownloadAndCancelButtonSwap(false);
             if(SceneAssetBundle != null && DataAssetBundle != null) ButtonSetAndEnable();
