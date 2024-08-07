@@ -1,19 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
-[RequireComponent(typeof(Text))]
-public class Score : MonoBehaviour
+
+namespace CB_TA.Clicker
 {
-    private int scoreAmount;
-    public int ScoreAmount 
-    { 
-        get { return scoreAmount;  } 
-        set 
+    public class Score
+    {
+        private Text text;
+        private int scoreAmount;
+        public int ScoreAmount
         {
-            scoreAmount = value;
-            GetComponent<Text>().text = scoreAmount.ToString();
-        } 
+            get { return scoreAmount; }
+            set
+            {
+                scoreAmount = value;
+                text.text = scoreAmount.ToString();
+            }
+        }
+
+        public Score(Text text)
+        {
+            this.text = text;
+        }
+
+        public void Add() => ScoreAmount++;
     }
-    public void Add() => ScoreAmount++;
 }
