@@ -1,21 +1,21 @@
 ManifestFileVersion: 0
-CRC: 1507611485
+CRC: 1295217442
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
+      Name: testbundle
+      Dependencies: {}
+    Info_1:
+      Name: clickerdata
+      Dependencies: {}
+    Info_2:
+      Name: adventuredata
+      Dependencies: {}
+    Info_3:
       Name: clickerscene
       Dependencies:
         Dependency_0: clickerdata
-    Info_1:
-      Name: testbundle
-      Dependencies: {}
-    Info_2:
-      Name: clickerdata
-      Dependencies: {}
-    Info_3:
+    Info_4:
       Name: adventurescene
       Dependencies:
         Dependency_0: adventuredata
-    Info_4:
-      Name: adventuredata
-      Dependencies: {}

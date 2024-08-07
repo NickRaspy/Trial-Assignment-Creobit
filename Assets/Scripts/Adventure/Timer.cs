@@ -2,23 +2,36 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
+namespace CB_TA.Adventure
 {
-    private float time;
-    public float TimeSpent
+    public class Timer
     {
-        get { return time; }
-        set 
-        { 
-            time = value;
-            TimeSpan newTime = TimeSpan.FromSeconds(time);
-            GetComponent<Text>().text = string.Format("{0:00}:{1:00}.{2:000}", newTime.Minutes, newTime.Seconds, newTime.Milliseconds);
+        [SerializeField] private Text text;
+
+        private float time = 0;
+        public float TimeSpent
+        {
+            get { return time; }
+            set
+            {
+                time = value;
+                TimeSpan newTime = TimeSpan.FromSeconds(time);
+                text.text = string.Format("{0:00}:{1:00}.{2:000}", newTime.Minutes, newTime.Seconds, newTime.Milliseconds);
+            }
         }
-    }
-    public bool IsTiming {  get; set; }
-    private void Start() => IsTiming = true;
-    void Update()
-    {
-        if (IsTiming) TimeSpent += Time.deltaTime;
+        public bool IsTiming { get; set; }
+
+        public Timer(Text text)
+        {
+            this.text = text;
+        }
+
+        public void Start() => IsTiming = true;
+        public void Update() { if (IsTiming) TimeSpent += Time.deltaTime; }
+        public void Restart()
+        {
+            TimeSpent = 0;
+            IsTiming = true;
+        }
     }
 }
