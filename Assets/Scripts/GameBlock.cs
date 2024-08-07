@@ -24,6 +24,7 @@ public class GameBlock : MonoBehaviour
     #region BUTTON_ACTIONS
     public void DownloadSceneWithObjectsFromAssetBundle()
     {
+<<<<<<< Updated upstream
         Launcher.instance.errorText.SetActive(false);
         DownloadAndCancelButtonSwap(true);
         IEnumerator LoadSceneWithObjects()
@@ -60,6 +61,7 @@ public class GameBlock : MonoBehaviour
         startButton.interactable = false;
         startButton.onClick.RemoveAllListeners();
 
+<<<<<<< Updated upstream
         deleteButton.interactable = false;
         deleteButton.onClick.RemoveAllListeners();
 
@@ -106,5 +108,32 @@ public class GameBlock : MonoBehaviour
     public enum Type
     {
         Scene, Data
+=======
+        IEnumerator GetFromWeb(Type type, string bundleName)
+        {
+            //manifest load
+            Hash128 hash = new();
+            yield return WebFunctions.CheckManifest((value) => hash = value, MainUrl + bundleName);
+            if (hash == null) yield break;
+            //assetbundle load
+            yield return WebFunctions.GetBundle((web) => {
+                switch (type)
+                {
+                    case Type.Scene:
+                        SceneAssetBundle = DownloadHandlerAssetBundle.GetContent(web);
+                        break;
+                    case Type.Data:
+                        DataAssetBundle = DownloadHandlerAssetBundle.GetContent(web);
+                        break;
+                    default:
+                        break;
+                }
+            }, MainUrl + bundleName, hash, loadingImage);
+        }
+        public enum Type
+        {
+            Scene, Data
+        }
+>>>>>>> Stashed changes
     }
 }
