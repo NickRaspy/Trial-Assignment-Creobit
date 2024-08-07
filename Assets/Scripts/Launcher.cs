@@ -5,8 +5,6 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
-using UnityEngine.AddressableAssets;
-using UnityEngine.UI;
 namespace CB_TA
 {
     public class Launcher : MonoBehaviour
