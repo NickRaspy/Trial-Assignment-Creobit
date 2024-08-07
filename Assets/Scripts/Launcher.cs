@@ -31,7 +31,6 @@ namespace CB_TA
 
         private void Start()
         {
-            StartCoroutine(WebFunctions.GetBundle(refer, (a) => { }, test));
             gameBlocks.ForEach(gb => gb.Init());
             if (Caching.cacheCount == 0) return;
             StartCoroutine(WebFunctions.CheckInternetConnection((connected) =>

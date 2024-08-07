@@ -11,8 +11,6 @@ namespace CB_TA
     public class GameBlock
     {
         public string MainUrl { get { return "https://storage.yandexcloud.net/cbtaunitytest/"; } }
-
-        [SerializeField] private GameObject block;
         [Header("Buttons")]
         [SerializeField] private ButtonCollection buttonCollection;
         private Button startButton;
@@ -28,17 +26,13 @@ namespace CB_TA
         public AssetBundle DataAssetBundle { get; set; }
         #endregion
 
-        [SerializeField] private AssetReference reference;
-
         private Coroutine downloadCoroutine;
 
-        public GameBlock(GameObject block, ButtonCollection buttonCollection, Image loadingImage, SceneWithObjectsBundleNames bundleNames, AssetReference reference)
+        public GameBlock(ButtonCollection buttonCollection, Image loadingImage, SceneWithObjectsBundleNames bundleNames)
         {
-            this.block = block;
             this.buttonCollection = buttonCollection;
             this.loadingImage = loadingImage;
             this.bundleNames = bundleNames;
-            this.reference = reference;
         }
 
         public void Init()
