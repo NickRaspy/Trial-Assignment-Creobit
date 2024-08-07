@@ -24,9 +24,6 @@ namespace CB_TA
         [SerializeField] private GameObject exitButton;
         [SerializeField] private GameObject updateScreen;
 
-        [SerializeField] private AssetLabelReference refer;
-        [SerializeField] private Image test;
-        [SerializeField] private Image image;
         public GameObject errorText;
 
         private void Start()
