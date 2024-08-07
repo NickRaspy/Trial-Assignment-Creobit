@@ -50,59 +50,6 @@ namespace CB_TA
             if (web.result != UnityWebRequest.Result.Success) { Debug.LogError("Failed to get AssetBundle!"); yield break; }
             action(web);
         }
-        public static IEnumerator GetBundle(AssetLabelReference assetLabel, Action<IEnumerator> sceneAction, Image loadingImage = null)
-        {
-            AsyncOperationHandle<IList<IResourceLocation>> resources = Addressables.LoadResourceLocationsAsync(assetLabel);
-            yield return resources;
-            if (resources.Status == AsyncOperationStatus.Failed) { Debug.LogError("Failed to get AssetBundle!"); yield break; }
-
-            List<ResourceLocationWithSize> resourcesLocations = new();
-
-            long size = 0;
-            foreach (var resource in resources.Result)
-            {
-                AsyncOperationHandle<long> getDownloadSize = Addressables.GetDownloadSizeAsync(resource.PrimaryKey);
-                yield return getDownloadSize;
-                if (getDownloadSize.Status == AsyncOperationStatus.Failed) { Debug.LogError("Failed to get AssetBundle size!"); yield break; }
-                resourcesLocations.Add(new(resource, getDownloadSize.Result));
-                size += getDownloadSize.Result;
-            }
-            bool isEnoughSpace = true;
-            CheckAvailableSpace_Value(size, (available) => isEnoughSpace = available);
-            if (!isEnoughSpace)
-            {
-                Debug.LogError("Not enough space!");
-                yield break;
-            }
-            long currentAmount = 0;
-            foreach (var resource in resourcesLocations)
-            {
-                AsyncOperationHandle assetLoad = new();
-                if (resource.resourceLocation.ResourceType == typeof(SceneInstance) || resource.resourceLocation.ResourceType == typeof(Scene))
-                {
-                    IEnumerator SceneLoad() { yield return Addressables.LoadSceneAsync(resource.resourceLocation.PrimaryKey, LoadSceneMode.Additive); }
-                    sceneAction(SceneLoad());
-                    currentAmount += resource.size;
-                }
-                else
-                {
-                    assetLoad = Addressables.LoadAssetAsync<object>(resource);
-                    while (!assetLoad.IsDone)
-                    {
-                        if (loadingImage != null && size != 0) loadingImage.fillAmount = (currentAmount + resource.size * assetLoad.PercentComplete) / size;
-                        yield return null;
-                    }
-                }
-                currentAmount += resource.size;
-            }
-            if (loadingImage != null) loadingImage.fillAmount = 0;
-        }
-        public static IEnumerator TestGet(AssetReferenceTexture2D asset, Image image)
-        {
-            AsyncOperationHandle<Sprite> operation = Addressables.LoadAssetAsync<Sprite>(asset);
-            yield return operation;
-            image.sprite = operation.Result;
-        }
         public static IEnumerator CheckAvailableSpace_URL(string fileURL, Action<bool> action)
         {
             UnityWebRequest head = UnityWebRequest.Head(fileURL);
